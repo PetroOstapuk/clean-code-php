@@ -1,88 +1,86 @@
-# Clean Code PHP
+# Чистий код на PHP
 
-## Table of Contents
+## Зміст
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-  3. [Comparison](#comparison)
-     * [Use identical comparison](#use-identical-comparison)
-     * [Null coalescing operator](#null-coalescing-operator)
-  4. [Functions](#functions)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
-  5. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use object encapsulation](#use-object-encapsulation)
-     * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
-     * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer final classes](#prefer-final-classes)
-  7. [SOLID](#solid)
-     * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-     * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-     * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-     * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-     * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+1. [Вступ](#вступ)
+2. [Змінні](#змінні)
+     * [Використовуйте значущі й вимовні імена змінних](#використовуйте-значущі-й-вимовні-імена-змінних)
+     * [Для одного типу змінних використовуйте єдиний словник](#для-одного-типу-змінних-використовуйте-єдиний-словник)
+     * [Використовуйте імена, за якими зручно шукати (частина 1)](#використовуйте-імена-за-якими-зручно-шукати--частина-1-)
+     * [Використовуйте імена, за якими зручно шукати (частина 2)](#використовуйте-імена-за-якими-зручно-шукати--частина-2-)
+     * [Використовуйте пояснювальні змінні](#використовуйте-пояснювальні-змінні)
+     * [Уникайте глибоких вкладень (частина 1)](#уникайте-глибоких-вкладень--частина-1-)
+     * [Уникайте глибоких вкладень (частина 2)](#уникайте-глибоких-вкладень--частина-2-)
+     * [Уникайте ментального зіставлення](#уникайте-ментального-зіставлення)
+     * [Не додавайте непотрібний контекст](#не-додавайте-непотрібний-контекст)
+     * [Використовуйте аргументи за замовчуванням замість коротких або умовних](#використовуйте-аргументи-за-замовчуванням-замість-коротких-або-умовних)
+3. [Порівняння](#порівняння)
+     * [Використовуйте ідентичне порівняння](#використовуйте-ідентичне-порівняння)
+     * [Оператор об'єднання з перевіркою на NULL](#оператор-обєднання-з-перевіркою-на-null)
+4. [Функції](#функції)
+     * [Аргументи функції (ідеально 2 або менше)](#аргументи-функції--ідеально-2-або-менше-)
+     * [Назви функцій мають вказувати на їх призначення](#назви-функцій-мають-вказувати-на-їх-призначення)
+     * [Функції повинні мати лише один рівень абстракції](#функції-повинні-мати-лише-один-рівень-абстракції)
+     * [Не використовуйте прапорці як параметри функцій](#не-використовуйте-прапорці-як-параметри-функцій)
+     * [Уникайте побічних ефектів](#уникайте-побічних-ефектів)
+     * [Не записуйте до глобальних функцій](#не-записуйте-до-глобальних-функцій)
+     * [Не використовуйте патерн Одинак](#не-використовуйте-патерн-одинак)
+     * [Інкапсулюйте умовні конструкції](#інкапсулюйте-умовні-конструкції)
+     * [Уникайте умовних конструкцій із запереченням](#уникайте-умовних-конструкцій-із-запереченням)
+     * [Уникайте умовних конструкцій](#уникайте-умовних-конструкцій)
+     * [Уникайте перевірки типів (частина 1)](#уникайте-перевірки-типів--частина-1-)
+     * [Уникайте перевірки типів (частина 2)](#уникайте-перевірки-типів--частина-2-)
+     * [Вилучіть мертвий код](#вилучіть-мертвий-код)
+5. [Об'єкти та структури даних](#обєкти-та-структури-даних)
+     * [Використовуйте інкапсуляцію об'єктів](#використовуйте-інкапсуляцію-обєктів)
+     * [Робіть поля об'єктів приватними або захищеними](#робіть-поля-обєктів-приватними-або-захищеними)
+6. [Класи](#класи)
+     * [Перевага композиції над успадкуванням](#перевага-композиції-над-успадкуванням)
+     * [Уникайте ланцюжкових методів](#уникайте-ланцюжкових-методів)
+     * [Перевага оголошення кінцевих (final) класів](#перевага-оголошення-кінцевих--final--класів)
+7. [SOLID](#solid)
+     * [Принцип єдиного обов'язку (SRP)](#принцип-єдиного-обовязку--srp-)
+     * [Принцип відкритості/закритості (OCP)](#принцип-відкритостізакритості--ocp-)
+     * [Принцип підстановки Барбари Лісков (LSP)](#принцип-підстановки-барбари-лісков--lsp-)
+     * [Принцип розділення інтерфейсу (ISP)](#принцип-розділення-інтерфейсу--isp-)
+     * [Принцип інверсії залежності (DIP)](#принцип-інверсії-залежності--dip-)
+8. [Не повторюйте себе (DRY)](#не-повторюйте-себе--dry-)
 
-## Introduction
+## Вступ
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+Принципи розробки програмного забезпечення з книги Роберта К. Мартіна
+[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+адаптований для PHP. Це не керівництво по стилю. Це посібник по створенню читабельного, повторно використовуваного та
+придатного до рефакторингу програмного забезпечення на PHP.
 
-Not every principle herein has to be strictly followed, and even fewer will be universally
-agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+Не обов'язково дотримуватися кожного принципу, викладеного тут, і ще менше з них будуть прийняті всіма. Це лише
+рекомендації, але вони були сформовані протягом багатьох років колективного досвіду авторами "Чистого коду".
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+На основі [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
-Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+Більшість прикладів у цій статті працюють з PHP 7+.
 
-## Variables
+## Змінні
 
-### Use meaningful and pronounceable variable names
+### Використовуйте значущі й вимовні імена змінних
 
-**Bad:**
+**Погано:**
 
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Use the same vocabulary for the same type of variable
+### Для одного типу змінних використовуйте єдиний словник
 
-**Bad:**
+**Погано:**
 
 ```php
 getUserInfo();
@@ -91,37 +89,35 @@ getUserRecord();
 getUserProfile();
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Use searchable names (part 1)
+### Використовуйте імена, за якими зручно шукати (частина 1)
 
-We will read more code than we will ever write. It's important that the code we do write is
-readable and searchable. By *not* naming variables that end up being meaningful for
-understanding our program, we hurt our readers.
-Make your names searchable.
+Ми читаємо більше коду, ніж пишемо. Важливо, щоб код, який ми пишемо, був читабельним та здатним
+до пошуку. Надавайте своїм іменам зрозумілі назви, які можна легко знайти.
 
-**Bad:**
+**Погано:**
 
 ```php
 // What the heck is 448 for?
 $result = $serializer->serialize($data, 448);
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
-### Use searchable names (part 2)
+### Використовуйте імена, за якими зручно шукати (частина 2)
 
-**Bad:**
+**Погано:**
 
 ```php
 class User
@@ -139,17 +135,14 @@ if ($user->access & 4) {
 $user->access ^= 2;
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class User
 {
     public const ACCESS_READ = 1;
-
     public const ACCESS_CREATE = 2;
-
     public const ACCESS_UPDATE = 4;
-
     public const ACCESS_DELETE = 8;
 
     // User as default can read, create and update something
@@ -164,11 +157,11 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Use explanatory variables
+### Використовуйте пояснювальні змінні
 
-**Bad:**
+**Погано:**
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -178,9 +171,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad:**
+**Не погано:**
 
-It's better, but we are still heavily dependent on regex.
+Це краще, але ми все ще сильно залежні від regex.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -191,9 +184,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good:**
+**Добре:**
 
-Decrease dependence on regex by naming subpatterns.
+Зменшуйте залежність від регулярних виразів, надаючи імена підшаблонам.
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -203,14 +196,13 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid nesting too deeply and return early (part 1)
+### Уникайте глибоких вкладень (частина 1)
 
-Too many if-else statements can make your code hard to follow. Explicit is better
-than implicit.
+Занадто багато умовних операторів if-else можуть зробити ваш код важким для розуміння. Явне краще, ніж неявне.
 
-**Bad:**
+**Погано:**
 
 ```php
 function isShopOpen($day): bool
@@ -224,16 +216,19 @@ function isShopOpen($day): bool
                 return true;
             } elseif ($day === 'sunday') {
                 return true;
+            } else {
+                return false;
             }
+        } else {
             return false;
         }
+    } else {
         return false;
     }
-    return false;
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function isShopOpen(string $day): bool
@@ -242,17 +237,19 @@ function isShopOpen(string $day): bool
         return false;
     }
 
-    $openingDays = ['friday', 'saturday', 'sunday'];
+    $openingDays = [
+        'friday', 'saturday', 'sunday'
+    ];
 
     return in_array(strtolower($day), $openingDays, true);
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid nesting too deeply and return early (part 2)
+### Уникайте глибоких вкладень (частина 2)
 
-**Bad:**
+**Погано:**
 
 ```php
 function fibonacci(int $n)
@@ -261,16 +258,19 @@ function fibonacci(int $n)
         if ($n !== 0) {
             if ($n !== 1) {
                 return fibonacci($n - 1) + fibonacci($n - 2);
+            } else {
+                return 1;
             }
-            return 1;
+        } else {
+            return 0;
         }
-        return 0;
+    } else {
+        return 'Not supported';
     }
-    return 'Not supported';
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function fibonacci(int $n): int
@@ -280,21 +280,20 @@ function fibonacci(int $n): int
     }
 
     if ($n >= 50) {
-        throw new Exception('Not supported');
+        throw new \Exception('Not supported');
     }
 
     return fibonacci($n - 1) + fibonacci($n - 2);
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid Mental Mapping
+### Уникайте ментального зіставлення
 
-Don’t force the reader of your code to translate what the variable means.
-Explicit is better than implicit.
+Не змушуйте читача вашого коду перекладати значення змінної. Явне краще, ніж неявне.
 
-**Bad:**
+**Погано:**
 
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
@@ -311,7 +310,7 @@ for ($i = 0; $i < count($l); $i++) {
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
@@ -326,68 +325,101 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Don't add unneeded context
+### Не додавайте непотрібний контекст
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+Якщо ім'я вашого класу/об'єкта є змістовним і зрозумілим, не повторюйте це в імені змінної.
 
-**Bad:**
+**Погано:**
 
 ```php
 class Car
 {
     public $carMake;
-
     public $carModel;
-
     public $carColor;
 
     //...
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Car
 {
     public $make;
-
     public $model;
-
     public $color;
 
     //...
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-## Comparison
+### Використовуйте аргументи за замовчуванням замість коротких або умовних
 
-### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+**Погано:**
 
-**Not good:**
+Це погано тому, що `$breweryName` може бути `NULL`.
 
-The simple comparison will convert the string into an integer.
+```php
+function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**Не погано:**
+
+Ця думка більш зрозуміла, ніж попередня версія, бо краще контролює значення змінної.
+
+```php
+function createMicrobrewery($name = null): void
+{
+    $breweryName = $name ?: 'Hipster Brew Co.';
+    // ...
+}
+```
+
+**Добре:**
+
+Ви можете використовувати [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+і бути упевненим, що `$breweryName` не буде `NULL`.
+
+```php
+function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
+{
+    // ...
+}
+```
+
+**[⬆ повернутись до змісту](#зміст)**
+
+## Порівняння
+
+### Використовуйте [ідентичне порівняння](http://php.net/manual/en/language.operators.comparison.php)
+
+**Погано:**
+
+Просте порівняння перетворить рядок на ціле число.
 
 ```php
 $a = '42';
 $b = 42;
 
 if ($a != $b) {
-    // The expression will always pass
+   // The expression will always pass
 }
 ```
 
-The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
-The string `42` is different than the integer `42`.
+Порівняння `$a != $b` повертає `FALSE`, але насправді це `TRUE`! Рядок `"42"` відрізняється від цілого числа `42`.
 
-**Good:**
+**Добре:**
 
-The identical comparison will compare type and value.
+Ідентичне порівняння порівнює тип і значення.
 
 ```php
 $a = '42';
@@ -398,15 +430,58 @@ if ($a !== $b) {
 }
 ```
 
-The comparison `$a !== $b` returns `TRUE`.
+Порівняння `$a !== $b` поверне `TRUE`.
 
-**[⬆ back to top](#table-of-contents)**
+До PHP 8.0.0, якщо рядок (string) порівнювався з числом або рядком, що містить число, то рядок (string) перетворювалося
+на число перед виконанням порівняння. Це могло призвести до несподіваних результатів, які можна побачити на наступному
+прикладі.
 
-### Null coalescing operator
+```php
 
-Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
+<?php
+var_dump(0 == "a");
+var_dump("1" == "01");
+var_dump("10" == "1e1");
+var_dump(100 == "1e2");
 
-**Bad:**
+switch ("a") {
+case 0:
+    echo "0";
+    break;
+case "a":
+    echo "a";
+    break;
+}
+?>
+```
+
+Результати порівняння:
+```php
+//PHP 7
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+0
+
+//PHP 8
+bool(false)
+bool(true)
+bool(true)
+bool(true)
+a
+```
+
+**[⬆ повернутись до змісту](#зміст)**
+
+### Оператор об'єднання з перевіркою на NULL.
+
+Null об'єднання є новим оператором [введено в PHP 7](https://www.php.net/manual/en/migration70.new-features.php).
+Оператор злиття з перевіркою на `NULL ??` був доданий як синтаксичний цукор для звичайного випадку, коли потрібно
+використовувати тернарний оператор разом з `isset()`. Він повертає свій перший операнд, якщо він існує і не є `null`;
+в іншому випадку він повертає свій другий операнд.
+
+**Погано:**
 
 ```php
 if (isset($_GET['name'])) {
@@ -418,54 +493,16 @@ if (isset($_GET['name'])) {
 }
 ```
 
-**Good:**
+**Добре:**
 ```php
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-## Functions
+## Функції
 
-### Use default arguments instead of short circuiting or conditionals
-
-**Not good:**
-
-This is not good because `$breweryName` can be `NULL`.
-
-```php
-function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
-{
-    // ...
-}
-```
-
-**Not bad:**
-
-This opinion is more understandable than the previous version, but it better controls the value of the variable.
-
-```php
-function createMicrobrewery($name = null): void
-{
-    $breweryName = $name ?: 'Hipster Brew Co.';
-    // ...
-}
-```
-
-**Good:**
-
- You can use [type hinting](https://www.php.net/manual/en/language.types.declarations.php) and be sure that the `$breweryName` will not be `NULL`.
-
-```php
-function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
-{
-    // ...
-}
-```
-
-**[⬆ back to top](#table-of-contents)**
-
-### Function arguments (2 or fewer ideally)
+### Аргументи функції (ідеально 2 або менше)
 
 Limiting the amount of function parameters is incredibly important because it makes
 testing your function easier. Having more than three leads to a combinatorial explosion
@@ -476,7 +513,7 @@ Anything more than that should be consolidated. Usually, if you have more than t
 arguments then your function is trying to do too much. In cases where it's not, most
 of the time a higher-level object will suffice as an argument.
 
-**Bad:**
+**Погано:**
 
 ```php
 class Questionnaire
@@ -496,15 +533,13 @@ class Questionnaire
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Name
 {
     private $firstname;
-
     private $lastname;
-
     private $patronymic;
 
     public function __construct(string $firstname, string $lastname, string $patronymic)
@@ -520,9 +555,7 @@ class Name
 class City
 {
     private $region;
-
     private $district;
-
     private $city;
 
     public function __construct(string $region, string $district, string $city)
@@ -538,7 +571,6 @@ class City
 class Contact
 {
     private $phone;
-
     private $email;
 
     public function __construct(string $phone, string $email)
@@ -559,11 +591,11 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Function names should say what they do
+### Назви функцій мають вказувати на їх призначення
 
-**Bad:**
+**Погано:**
 
 ```php
 class Email
@@ -581,7 +613,7 @@ $message = new Email(...);
 $message->handle();
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Email
@@ -599,15 +631,14 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Functions should only be one level of abstraction
+### Функції повинні мати лише один рівень абстракції
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+Коли у вас є більше одного рівня абстракції, ваша функція зазвичай робить забагато. Розбиття функцій призводить до
+повторного використання та полегшує тестування.
 
-**Bad:**
+**Погано:**
 
 ```php
 function parseBetterPHPAlternative(string $code): void
@@ -635,10 +666,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Bad too:**
+**Погано too:**
 
-We have carried out some of the functionality, but the `parseBetterPHPAlternative()` function is still very complex and not testable.
-
+Ми виконали деяку функціональність, але функція `parseBetterPHPAlternative()` все ще дуже складна і не піддається тестуванню.
 ```php
 function tokenize(string $code): array
 {
@@ -677,9 +707,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Good:**
+**Добре:**
 
-The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
+Найкращим рішенням є вилучення залежностей від функції `parseBetterPHPAlternative()`.
 
 ```php
 class Tokenizer
@@ -737,28 +767,27 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Don't use flags as function parameters
+### Не використовуйте прапорці як параметри функцій
 
-Flags tell your user that this function does more than one thing. Functions should
-do one thing. Split out your functions if they are following different code paths
-based on a boolean.
+Булеві параметри говорять користувачеві, що функція робить більше, ніж одну річ. Функції повинні робити одну річ.
+Розбийте вашу функцію на кілька, якщо вони йдуть різними шляхами коду, залежно від булевого значення.
 
-**Bad:**
+**Погано:**
 
 ```php
 function createFile(string $name, bool $temp = false): void
 {
     if ($temp) {
-        touch('./temp/' . $name);
+        touch('./temp/'.$name);
     } else {
         touch($name);
     }
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function createFile(string $name): void
@@ -768,29 +797,27 @@ function createFile(string $name): void
 
 function createTempFile(string $name): void
 {
-    touch('./temp/' . $name);
+    touch('./temp/'.$name);
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid Side Effects
+### Уникайте побічних ефектів
 
-A function produces a side effect if it does anything other than take a value in and
-return another value or values. A side effect could be writing to a file, modifying
-some global variable, or accidentally wiring all your money to a stranger.
+Функція викликає побічний ефект, якщо вона робить щось, крім приймання значення та повернення іншого значення або значень.
+Побічні ефекти можуть включати запис до файлу, зміну глобальної змінної або випадкове перерахування всіх ваших грошей
+незнайомцю.
 
-Now, you do need to have side effects in a program on occasion. Like the previous
-example, you might need to write to a file. What you want to do is to centralize where
-you are doing this. Don't have several functions and classes that write to a particular
-file. Have one service that does it. One and only one.
+Звичайно, у програмі потрібно мати побічні ефекти. Наприклад, як у попередньому прикладі, вам може знадобитися запис до
+файлу. Важливо централізувати те, що ви робите. Не створюйте декілька функцій і класів, що записують до певного файлу.
+Має бути лише один сервіс, що це робить.
 
-The main point is to avoid common pitfalls like sharing state between objects without
-any structure, using mutable data types that can be written to by anything, and not
-centralizing where your side effects occur. If you can do this, you will be happier
-than the vast majority of other programmers.
+Основна ідея полягає у тому, щоб уникати поширених помилок, таких як спільний стан між об'єктами без будь-якої структури,
+використання змінних типів даних, які можуть бути змінені будь-чим та невідцентроване розміщення побічних ефектів.
+Якщо ви можете досягти цього, ви будете щасливішими за більшість інших програмістів.
 
-**Bad:**
+**Погано:**
 
 ```php
 // Global variable referenced by following function.
@@ -806,11 +833,10 @@ function splitIntoFirstAndLastName(): void
 
 splitIntoFirstAndLastName();
 
-var_dump($name);
-// ['Ryan', 'McDermott'];
+var_dump($name); // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function splitIntoFirstAndLastName(string $name): array
@@ -821,35 +847,32 @@ function splitIntoFirstAndLastName(string $name): array
 $name = 'Ryan McDermott';
 $newName = splitIntoFirstAndLastName($name);
 
-var_dump($name);
-// 'Ryan McDermott';
-
-var_dump($newName);
-// ['Ryan', 'McDermott'];
+var_dump($name); // 'Ryan McDermott';
+var_dump($newName); // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Don't write to global functions
+### Не записуйте до глобальних функцій
 
-Polluting globals is a bad practice in many languages because you could clash with another
-library and the user of your API would be none-the-wiser until they get an exception in
-production. Let's think about an example: what if you wanted to have configuration array?
-You could write global function like `config()`, but it could clash with another library
-that tried to do the same thing.
+Забруднення глобальних змінних є поганою практикою у багатьох мовах програмування, оскільки ви можете зіткнутися з іншою
+бібліотекою, і користувач вашого API не буде попереджений, поки не отримає виняток у продакшені.
+Подумаймо про приклад: що, якщо вам потрібен масив конфігурації? Ви можете написати глобальну функцію, наприклад,
+`config()`, але це може зіткнутися з іншою бібліотекою, яка також намагатиметься зробити те саме.
 
-**Bad:**
+
+**Погано:**
 
 ```php
 function config(): array
 {
-    return [
+    return  [
         'foo' => 'bar',
     ];
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Configuration
@@ -863,13 +886,13 @@ class Configuration
 
     public function get(string $key): ?string
     {
-        // null coalescing operator
+        // null coalescing operator 
         return $this->configuration[$key] ?? null;
     }
 }
 ```
 
-Load configuration and create instance of `Configuration` class
+Завантажте конфігурацію та створіть екземпляр класу `Configuration`.
 
 ```php
 $configuration = new Configuration([
@@ -877,21 +900,27 @@ $configuration = new Configuration([
 ]);
 ```
 
-And now you must use instance of `Configuration` in your application.
+І тепер вам потрібно використовувати екземпляр класу `Configuration` у своєму додатку.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Don't use a Singleton pattern
+### Не використовуйте патерн Одинак
 
-Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
- 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
- 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
- 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+Сінґлтон є [анти-патерном](https://en.wikipedia.org/wiki/Singleton_pattern). За перефразованими словами Брайана Баттона:
 
-There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+1. Зазвичай він використовуються як **глобальний екземпляр**. Чому це Погано? Тому що **ви приховуєте залежності** вашої програми
+   в вашому коді, замість того, щоб викладати їх через інтерфейси. Робити щось глобальним, щоб уникнути передачі даних по
+   всій програмі, є запахом коду.
+2. Він порушує [принцип єдиного обов'язку](#принцип-єдиного-обовязку--srp-), оскільки керують своїм власним створенням та життєвим циклом.
+3. Він неодмінно призводить до [зв'язності](https://uk.wikipedia.org/wiki/Зв'язність_(програмування)). Це ускладнює їх
+   емуляцію під час тестування, в багатьох випадках.
+4. Він зберігає стан упродовж життєвого циклу програми. Це також впливає на тестування, оскільки може статися так,
+   що тести потребують послідовного запуску, що не допустимо для юніт-тестів. Чому? Тому що кожен юніт-тест має бути
+   незалежним від інших.
 
-**Bad:**
+Також [Misko Hevery](http://misko.hevery.com/about/) висловлює думку про [корінь проблеми](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+
+**Погано:**
 
 ```php
 class DBConnection
@@ -903,7 +932,7 @@ class DBConnection
         // ...
     }
 
-    public static function getInstance(): self
+    public static function getInstance(): DBConnection
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -918,7 +947,7 @@ class DBConnection
 $singleton = DBConnection::getInstance();
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class DBConnection
@@ -928,23 +957,23 @@ class DBConnection
         // ...
     }
 
-    // ...
+     // ...
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+Створіть екземпляр класу `DBConnection` та налаштуйте його з допомогою [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
 
 ```php
 $connection = new DBConnection($dsn);
 ```
 
-And now you must use instance of `DBConnection` in your application.
+Тепер вам потрібно використовувати екземпляр класу `DBConnection` у своєму додатку.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Encapsulate conditionals
+### Інкапсулюйте умовні конструкції
 
-**Bad:**
+**Погано:**
 
 ```php
 if ($article->state === 'published') {
@@ -952,7 +981,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 if ($article->isPublished()) {
@@ -960,27 +989,28 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid negative conditionals
+### Уникайте умовних конструкцій із запереченням
 
-**Bad:**
+**Погано:**
 
 ```php
-function isDOMNodeNotPresent(DOMNode $node): bool
+function isDOMNodeNotPresent(\DOMNode $node): bool
 {
     // ...
 }
 
-if (! isDOMNodeNotPresent($node)) {
+if (!isDOMNodeNotPresent($node))
+{
     // ...
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
-function isDOMNodePresent(DOMNode $node): bool
+function isDOMNodePresent(\DOMNode $node): bool
 {
     // ...
 }
@@ -990,20 +1020,17 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid conditionals
+### Уникайте умовних конструкцій
 
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+Це здається неможливим завданням. Почувши це вперше, більшість людей кажуть: "як я повинен щось зробити без оператора
+`if`?" Відповідь полягає в тому, що в багатьох випадках можна використовувати поліморфізм, щоб досягти тієї ж самої мети.
+Друге запитання зазвичай таке: "добре, це чудово, але навіщо мені це потрібно?" Відповідь полягає в попередньому концепті
+чистого коду, який ми вивчили: функція повинна робити тільки одну річ. Коли в класах та функціях є оператори `if`, ви
+повідомляєте своїм користувачам, що ваша функція робить більше однієї речі. Пам'ятайте, робіть тільки одну річ.
 
-**Bad:**
+**Погано:**
 
 ```php
 class Airplane
@@ -1024,7 +1051,7 @@ class Airplane
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 interface Airplane
@@ -1065,16 +1092,15 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid type-checking (part 1)
+### Уникайте перевірки типів (частина 1)
 
-PHP is untyped, which means your functions can take any type of argument.
-Sometimes you are bitten by this freedom and it becomes tempting to do
-type-checking in your functions. There are many ways to avoid having to do this.
-The first thing to consider is consistent APIs.
+PHP не строго типізована мова, що означає, що ваші функції можуть приймати будь-який тип аргументу.
+Іноді ця свобода може виявитись проблемою, і з'являється спокуса робити перевірку типів у ваших функціях.
+Але існує багато способів, які допоможуть уникнути цього. Перш за все потрібно забезпечити стійкий API.
 
-**Bad:**
+**Погано:**
 
 ```php
 function travelToTexas($vehicle): void
@@ -1087,7 +1113,7 @@ function travelToTexas($vehicle): void
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function travelToTexas(Vehicle $vehicle): void
@@ -1096,34 +1122,34 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid type-checking (part 2)
+### Уникайте перевірки типів (частина 2)
 
-If you are working with basic primitive values like strings, integers, and arrays,
-and you use PHP 7+ and you can't use polymorphism but you still feel the need to
-type-check, you should consider
-[type declaration](https://www.php.net/manual/en/language.types.declarations.php)
-or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it will require so much
-extra verbiage that the faux "type-safety" you get doesn't make up for the lost
-readability. Keep your PHP clean, write good tests, and have good code reviews.
-Otherwise, do all of that but with PHP strict type declaration or strict mode.
+Якщо ви працюєте з базовими примітивними типами даних, такими як рядки, цілі числа та масиви, і використовуєте
+PHP 7+ та не можете використовувати поліморфізм, але все ще відчуваєте потребу в перевірці типів, вам слід
+розглянути використання [оголошення типу](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
+або строгого режиму. Це надає вам статичну типізацію на основі стандартного
+синтаксису PHP. Проблема з ручною перевіркою типів полягає в тому, що це вимагає так багато додаткового коду,
+що псевдо "типобезпека", яку ви отримуєте, не виправдовує втраченої зрозумілості коду. Тримайте свій PHP код чистим,
+пишіть добрі тести та проводьте добре код-ревю. Інакше, робіть все це, але з використанням строгої типізації PHP
+або строгого режиму.
 
-**Bad:**
+
+**Погано:**
 
 ```php
 function combine($val1, $val2): int
 {
-    if (! is_numeric($val1) || ! is_numeric($val2)) {
-        throw new Exception('Must be of type Number');
+    if (!is_numeric($val1) || !is_numeric($val2)) {
+        throw new \Exception('Must be of type Number');
     }
 
     return $val1 + $val2;
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function combine(int $val1, int $val2): int
@@ -1132,15 +1158,15 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Remove dead code
+### Вилучіть мертвий код
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+Мертвий код так само погано, як і дубльований код. Немає причин залишати його в своєму кодові. Якщо він
+не використовується, видаліть його! Він все ще буде збережений в історії версій, якщо вам все ще потрібно буде
+до нього звернутися.
 
-**Bad:**
+**Погано:**
 
 ```php
 function oldRequestModule(string $url): void
@@ -1157,7 +1183,7 @@ $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function requestModule(string $url): void
@@ -1169,28 +1195,27 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
 
-## Objects and Data Structures
+## Об'єкти та структури даних
 
-### Use object encapsulation
+### Використовуйте інкапсуляцію об'єктів
 
-In PHP you can set `public`, `protected` and `private` keywords for methods.
-Using it, you can control properties modification on an object.
+У PHP ви можете використовувати ключові слова `public`, `protected` та `private` для методів. Використовуючи їх,
+ви можете контролювати зміну властивостей об'єкта.
 
-* When you want to do more beyond getting an object property, you don't have
-to look up and change every accessor in your codebase.
-* Makes adding validation simple when doing a `set`.
-* Encapsulates the internal representation.
-* Easy to add logging and error handling when getting and setting.
-* Inheriting this class, you can override default functionality.
-* You can lazy load your object's properties, let's say getting it from a
-server.
+* Коли вам потрібно більше, ніж лише отримання властивості об'єкта, вам не потрібно шукати й змінювати кожний метод
+  доступу в вашій кодовій базі.
+* Дозволяє легко додавати валідацію під час виклику `set`.
+* Інкапсулює внутрішнє представлення об'єкта.
+* Легко додати логування та обробку помилок під час отримання та встановлення властивостей.
+* Наслідуючи цей клас, ви можете перевизначити функціональність за замовчуванням.
+* Ви можете ліниво завантажувати властивості вашого об'єкта, наприклад, отримуючи їх з сервера.
 
-Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
+Крім того, це частина принципу [Open/Closed](#принцип-відкритостізакритості--ocp-).
 
-**Bad:**
+**Погано:**
 
 ```php
 class BankAccount
@@ -1204,7 +1229,7 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class BankAccount
@@ -1230,7 +1255,7 @@ class BankAccount
         $this->balance += $amount;
     }
 
-    public function getBalance(): int
+    public function getBalance(): int
     {
         return $this->balance;
     }
@@ -1245,19 +1270,25 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Make objects have private/protected members
+### Робіть поля об'єктів приватними або захищеними.
 
-* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
-* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `public` модифікатор для методів та властивостей є найбільш небезпечними для змін, оскільки зовнішній код може
+  легко розраховувати на них і ви не можете контролювати, на що розраховує код. Модифікації в класі є небезпечними для
+  всіх користувачів класу.
+* `protected` модифікатор так само небезпечний, як і `public`, оскільки він доступний в області будь-якого
+  дочірнього класу. Це практично означає, що різниця між `public` та `protected` полягає лише у механізмі доступу,
+  але гарантія інкапсуляції залишається тією ж самою. Модифікації в класі є небезпечними для всіх нащадків класу.
+* `private` модифікатор гарантує, що код є **небезпечним для змін лише в межах одного класу** (ви захищені від
+  модифікацій ззовні й не матимете ефекту Jenga).
 
-Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
+Отже, за замовчуванням використовуйте `private`, а `public/protected` - коли вам потрібно надати доступ зовнішнім класам.
 
-For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
+Для отримання додаткової інформації ви можете прочитати [пост у блозі](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html)
+на цю тему, написаний [Fabien Potencier](https://github.com/fabpot).
 
-**Bad:**
+**Погано:**
 
 ```php
 class Employee
@@ -1271,11 +1302,10 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-// Employee name: John Doe
-echo 'Employee name: ' . $employee->name;
+echo 'Employee name: '.$employee->name; // Employee name: John Doe
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Employee
@@ -1294,40 +1324,38 @@ class Employee
 }
 
 $employee = new Employee('John Doe');
-// Employee name: John Doe
-echo 'Employee name: ' . $employee->getName();
+echo 'Employee name: '.$employee->getName(); // Employee name: John Doe
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-## Classes
+## Класи
 
-### Prefer composition over inheritance
+### Перевага композиції над успадкуванням
 
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
+Як зазначається у відомій книзі [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) від "Банди Чотирьох",
+варто віддавати перевагу композиції перед успадкуванням, якщо це можливо. Є багато добрих причин для використання
+успадкування і багато добрих причин для використання композиції. Основна мета цього правила полягає в тому,
+що якщо ваш розум інстинктивно налаштований на успадкування, спробуйте подумати, чи може композиція краще описати вашу
+проблему. У деяких випадках вона може бути кращим рішенням.
 
 You might be wondering then, "when should I use inheritance?" It
 depends on your problem at hand, but this is a decent list of when inheritance
 makes more sense than composition:
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
+Ви, можливо, ставите собі питання: "коли ж мені варто використовувати наслідування?" Це залежить від вашої конкретної
+проблеми, але ось список випадків, коли наслідування є більш доцільним, ніж композиція:
 
-**Bad:**
+1. Ваше наслідування представляє "є" відношення, а не "має" відношення (Human->Animal проти User->UserDetails).
+2. Ви можете використовувати код з базових класів (Людина може рухатись як будь-яка тварина).
+3. Ви хочете внести глобальні зміни в похідні класи, змінивши базовий клас (зміна калорійної витрати всіх тварин під час руху).
+
+**Погано:**
 
 ```php
 class Employee
 {
     private $name;
-
     private $email;
 
     public function __construct(string $name, string $email)
@@ -1345,7 +1373,6 @@ class Employee
 class EmployeeTaxData extends Employee
 {
     private $ssn;
-
     private $salary;
 
     public function __construct(string $name, string $email, string $ssn, string $salary)
@@ -1360,13 +1387,12 @@ class EmployeeTaxData extends Employee
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class EmployeeTaxData
 {
     private $ssn;
-
     private $salary;
 
     public function __construct(string $ssn, string $salary)
@@ -1381,9 +1407,7 @@ class EmployeeTaxData
 class Employee
 {
     private $name;
-
     private $email;
-
     private $taxData;
 
     public function __construct(string $name, string $email)
@@ -1392,7 +1416,7 @@ class Employee
         $this->email = $email;
     }
 
-    public function setTaxData(EmployeeTaxData $taxData): void
+    public function setTaxData(EmployeeTaxData $taxData)
     {
         $this->taxData = $taxData;
     }
@@ -1401,36 +1425,33 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Avoid fluent interfaces
+### Уникайте ланцюжкових методів
 
-A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
-oriented API that aims to improve the readability of the source code by using
-[Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
+[Fluent interface](http://localhost:3000/docs/tutorials/programming/patterns/structural-patterns/fluent_interface) це об'єктноорієнтований API, який має на меті
+покращити читабельність вихідного коду за допомогою використання
+[Ланцюжкових методів](https://en.wikipedia.org/wiki/Method_chaining).
 
-While there can be some contexts, frequently builder objects, where this
-pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
-or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
-more often it comes at some costs:
+Хоча є деякі контексти, часто об'єкти-будівники, де цей шаблон зменшує об'єм коду (наприклад,  [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
+чи [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
+частіше це пов'язано з деякими витратами:
 
-1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
-2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
-3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
-4. Makes diffs of commits harder to read.
+1. Порушує [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
+2. Порушує [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
+3. Складніше [імітувати](https://en.wikipedia.org/wiki/Mock_object) в тестах.
+4. Робить відмінності комітів важчими для читання.
 
-For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
-on this topic written by [Marco Pivetta](https://github.com/Ocramius).
+Для отримання додаткової інформації ви можете прочитати повний текст [статті](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
+на цю тему написав [Marco Pivetta](https://github.com/Ocramius).
 
-**Bad:**
+**Погано:**
 
 ```php
 class Car
 {
     private $make = 'Honda';
-
     private $model = 'Accord';
-
     private $color = 'white';
 
     public function setMake(string $make): self
@@ -1464,21 +1485,19 @@ class Car
 }
 
 $car = (new Car())
-    ->setColor('pink')
-    ->setMake('Ford')
-    ->setModel('F-150')
-    ->dump();
+  ->setColor('pink')
+  ->setMake('Ford')
+  ->setModel('F-150')
+  ->dump();
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class Car
 {
     private $make = 'Honda';
-
     private $model = 'Accord';
-
     private $color = 'white';
 
     public function setMake(string $make): void
@@ -1509,23 +1528,23 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Prefer final classes
+### Перевага оголошення фінальних (final) класів
 
-The `final` keyword should be used whenever possible:
+За можливості слід використовувати `final`::
 
-1. It prevents an uncontrolled inheritance chain.
-2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
-4. It encourages developers to use your public methods instead of extending the class to get access to protected ones.
-5. It allows you to change your code without breaking applications that use your class.
+1. Воно запобігає неконтрольованому ланцюжку успадкування.
+2. Воно сприяє композиції над успадкуванням. [composition](#prefer-composition-over-inheritance).
+3. Воно підтримує принцип єдиного обов'язку (SRP) [Single Responsibility Pattern](#single-responsibility-principle-srp).
+4. Воно спонукає розробників використовувати ваші публічні методи замість успадкування класу для отримання доступу до захищених методів.
+5. Воно дозволяє вам змінювати свій код без будь-яких помилок у додатках, які використовують ваш клас.
 
-The only condition is that your class should implement an interface and no other public methods are defined.
+Єдине обмеження полягає в тому, що ваш клас має реалізувати інтерфейс і не повинен мати інших публічних методів.
 
-For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+Для додаткової інформації можна прочитати [статтю](https://ocramius.github.io/blog/when-to-declare-classes-final/) автора [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
 
-**Bad:**
+**Погано:**
 
 ```php
 final class Car
@@ -1547,7 +1566,7 @@ final class Car
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 interface Vehicle
@@ -1567,6 +1586,9 @@ final class Car implements Vehicle
         $this->color = $color;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getColor()
     {
         return $this->color;
@@ -1574,30 +1596,31 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
 ## SOLID
 
-**SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
+**SOLID** це мнемонічний абревіатурний акронім, який був запропонований Майклом Фезерсом для перших п'яти принципів,
+названих Робертом Мартіном. Ці принципи становлять п'ять основних принципів об'єктноорієнтованого програмування
+та проєктування.
 
- * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
- * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
- * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
- * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
- * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+* [S: Принцип єдиного обов'язку (SRP)](#принцип-єдиного-обовязку--srp-)
+* [O: Принцип відкритості/закритості (OCP)](#принцип-відкритостізакритості--ocp-)
+* [L: Принцип підстановки Барбари Лісков (LSP)](#принцип-підстановки-барбари-лісков--lsp-)
+* [I: Принцип розділення інтерфейсу (ISP)](#принцип-розділення-інтерфейсу--isp-)
+* [D: Принцип інверсії залежності (DIP)](#принцип-інверсії-залежності--dip-)
 
-### Single Responsibility Principle (SRP)
 
-As stated in Clean Code, "There should never be more than one reason for a class
-to change". It's tempting to jam-pack a class with a lot of functionality, like
-when you can only take one suitcase on your flight. The issue with this is
-that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
-It's important because if too much functionality is in one class and you modify a piece of it,
-it can be difficult to understand how that will affect other dependent modules in
-your codebase.
+### Принцип єдиного обов'язку (SRP)
 
-**Bad:**
+Як зазначено в "Clean Code", "Ніколи не повинно бути більше однієї причини для зміни класу". Дуже привабливо наповнити
+клас багатьма функціональностями, як у випадку, коли ви можете взяти з собою тільки одну валізу на рейс.
+Проблема полягає в тому, що ваш клас не буде концептуально згуртованим, і у нього буде багато причин для зміни.
+Мінімізація кількості випадків, коли потрібно змінити клас, є важливою. Це важливо, оскільки якщо в одному класі занадто
+багато функціональності, і ви змінюєте частину коду, то може бути важко зрозуміти, як це вплине на інші залежні модулі
+в вашому коді.
+
+**Погано:**
 
 ```php
 class UserSettings
@@ -1623,7 +1646,7 @@ class UserSettings
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 class UserAuth
@@ -1644,7 +1667,6 @@ class UserAuth
 class UserSettings
 {
     private $user;
-
     private $auth;
 
     public function __construct(User $user)
@@ -1662,16 +1684,15 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Open/Closed Principle (OCP)
+### Принцип відкритості/закритості (OCP)
 
-As stated by Bertrand Meyer, "software entities (classes, modules, functions,
-etc.) should be open for extension, but closed for modification." What does that
-mean though? This principle basically states that you should allow users to
-add new functionalities without changing existing code.
+Як зазначено Бертраном Майєром, "програмні сутності (класи, модулі, функції тощо) мають бути відкриті для розширення,
+але закриті для змін". Але що це означає? Основна ідея цього принципу полягає в тому, що ви маєте дозволити користувачам
+додавати нові функціональності без зміни наявного коду.
 
-**Bad:**
+**Погано:**
 
 ```php
 abstract class Adapter
@@ -1736,7 +1757,7 @@ class HttpRequester
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 interface Adapter
@@ -1776,30 +1797,28 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Liskov Substitution Principle (LSP)
+### Принцип підстановки Барбари Лісков (LSP)
 
-This is a scary term for a very simple concept. It's formally defined as "If S
-is a subtype of T, then objects of type T may be replaced with objects of type S
-(i.e., objects of type S may substitute objects of type T) without altering any
-of the desirable properties of that program (correctness, task performed,
-etc.)." That's an even scarier definition.
+Це насправді дуже простий концепт, названий досить жахливою термінологією.
+Формально це визначається як "Якщо S є підтипом T, то об'єкти типу T можуть бути
+замінені об'єктами типу S (тобто об'єкти типу S можуть заміщувати об'єкти типу T)
+без зміни будь-яких корисних властивостей програми (правильність, виконана задача і т.д.)."
+Це визначення ще жахливіше.
 
-The best explanation for this is if you have a parent class and a child class,
-then the base class and child class can be used interchangeably without getting
-incorrect results. This might still be confusing, so let's take a look at the
-classic Square-Rectangle example. Mathematically, a square is a rectangle, but
-if you model it using the "is-a" relationship via inheritance, you quickly
-get into trouble.
+Найкращим поясненням для цього є, якщо у вас є батьківський клас та дочірній клас,
+то базовий клас і дочірній клас можуть використовуватися взаємозамінно без отримання
+неправильних результатів. Проте це все ще може бути заплутаним, тому розгляньмо класичний
+приклад квадрата і прямокутника. Математично квадрат є прямокутником, але якщо ви моделюєте
+його за допомогою відносини "є-типом" за допомогою наслідування, то ви швидко потрапите в складне положення.
 
-**Bad:**
+**Погано:**
 
 ```php
 class Rectangle
 {
     protected $width = 0;
-
     protected $height = 0;
 
     public function setWidth(int $width): void
@@ -1836,8 +1855,8 @@ function printArea(Rectangle $rectangle): void
     $rectangle->setWidth(4);
     $rectangle->setHeight(5);
 
-    // BAD: Will return 25 for Square. Should be 20.
-    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()) . PHP_EOL;
+    // Погано: Will return 25 for Square. Should be 20.
+    echo sprintf('%s has area %d.', get_class($rectangle), $rectangle->getArea()).PHP_EOL;
 }
 
 $rectangles = [new Rectangle(), new Square()];
@@ -1847,13 +1866,13 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Good:**
+**Добре:**
 
-The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
+Найкращим рішенням є розділення чотирикутників та виділення більш загального субтипу для обох фігур.
 
-Despite the apparent similarity of the square and the rectangle, they are different.
-A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtypes.
-A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
+Попри видиму схожість квадрата та прямокутника, вони різні. Квадрат має багато спільного з ромбом, а прямокутник -
+з паралелограмом, але вони не є підтипами один одного. Квадрат, прямокутник, ромб та паралелограм - це окремі фігури
+з власними властивостями, хоча вони й схожі.
 
 ```php
 interface Shape
@@ -1889,8 +1908,8 @@ class Square implements Shape
 
     public function getArea(): int
     {
-        return $this->length ** 2;
-    }
+        return $this->length ** 2;
+    }
 }
 
 function printArea(Shape $shape): void
@@ -1905,19 +1924,18 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Interface Segregation Principle (ISP)
+### Принцип розділення інтерфейсу (ISP)
 
-ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use."
+Принцип ISP стверджує, що "Клієнти не повинні залежати від інтерфейсів, які вони не використовують."
 
-A good example to look at that demonstrates this principle is for
-classes that require large settings objects. Not requiring clients to set up
-huge amounts of options is beneficial, because most of the time they won't need
-all of the settings. Making them optional helps prevent having a "fat interface".
+Добрим прикладом, який демонструє цей принцип, є класи, які вимагають великих об'єктів налаштувань.
+Не вимагати від клієнтів налаштовувати великі кількості параметрів корисно, оскільки більшість часу
+вони не потребують всіх цих налаштувань. Якщо зробити їх необов'язковими, то це допоможе запобігти
+виникненню "товстого інтерфейсу".
 
-**Bad:**
+**Погано:**
 
 ```php
 interface Employee
@@ -1954,9 +1972,12 @@ class RobotEmployee implements Employee
 }
 ```
 
-**Good:**
+**Добре:**
 
-Not every worker is an employee, but every employee is a worker.
+Не кожен працівник є співробітником, але кожен співробітник є працівником.
+Термін "працівник" є більш загальним і може містити різні типи праці, включаючи фізичну працю та роботу на
+самозайнятій основі. Водночас термін "співробітник" зазвичай використовується для опису тих,
+хто працює на певну компанію або організацію і зазвичай має певний договір про працю або угоду.
 
 ```php
 interface Workable
@@ -1996,24 +2017,23 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-### Dependency Inversion Principle (DIP)
+### Принцип інверсії залежності (DIP)
 
-This principle states two essential things:
-1. High-level modules should not depend on low-level modules. Both should
-depend on abstractions.
-2. Abstractions should not depend upon details. Details should depend on
-abstractions.
+Принцип заявляє про дві суттєві речі:
 
-This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
-Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
-It can accomplish this through DI. A huge benefit of this is that it reduces
-the coupling between modules. Coupling is a very bad development pattern because
-it makes your code hard to refactor.
+1. Модулі високого рівня не повинні залежати від модулів нижчого рівня. Обидва повинні залежати від абстракцій.
+2. Абстракції не повинні залежати від деталей. Деталі повинні залежати від абстракцій.
 
-**Bad:**
+Це може бути важко зрозуміти на початку, але якщо ви працювали з фреймворками PHP (наприклад, Symfony),
+ви бачили реалізацію цього принципу у вигляді Dependency Injection (DI). Хоча це не тотожні концепції,
+DIP запобігає високорівневим модулям знати деталі низькорівневих модулів та налаштовувати їх. Це можливо завдяки DI.
+Велика перевага полягає в тому, що це зменшує зв'язок між модулями. Зв'язність є дуже поганою практикою розробки,
+оскільки це ускладнює рефакторинг вашого коду.
+
+
+**Погано:**
 
 ```php
 class Employee
@@ -2048,7 +2068,7 @@ class Manager
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 interface Employee
@@ -2088,34 +2108,30 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
 
-## Don’t repeat yourself (DRY)
+## Не повторюйте себе (DRY)
 
-Try to observe the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
+Намагайтеся дотримуватися принципу [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (не повторюйся).
 
-Do your absolute best to avoid duplicate code. Duplicate code is bad because
-it means that there's more than one place to alter something if you need to
-change some logic.
+Робіть все можливе, щоб уникнути дублювання коду. Дублювання коду - це погано, оскільки це означає,
+що потрібно змінювати логіку в більш ніж одному місці.
 
-Imagine if you run a restaurant and you keep track of your inventory: all your
-tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+Уявіть, що ви ведете ресторан і відстежуєте свій інвентар: всі ваші помідори, цибуля, часник, спеції тощо.
+Якщо у вас є кілька списків для цього, то всі вони повинні бути оновлені, коли ви подаєте страву з помідорами.
+Якщо ж у вас є лише один список, то потрібно оновлювати тільки одне місце!
 
-Often you have duplicate code because you have two or more slightly
-different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing
-duplicate code means creating an abstraction that can handle this set of different
-things with just one function/module/class.
+Часто дублювання коду виникає тому, що у вас є два або більше незначно різних елементів,
+які мають багато спільного, але їхні відмінності змушують вас мати дві або більше окремих функцій,
+які виконують багато однакових дій. Видалення дубльованого коду означає створення абстракції,
+яка може обробляти цей набір різних елементів за допомогою однієї функції/модуля/класу.
 
-Getting the abstraction right is critical, that's why you should follow the
-SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
-worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
-updating multiple places any time you want to change one thing.
+Важливо правильно визначити абстракцію, тому вам слід дотримуватися принципів SOLID,
+наведених у розділі [Класи](#класи). Погані абстракції можуть бути гіршими за дубльований код, тому будьте обережні!
+Проте, якщо ви можете створити хорошу абстракцію, то зробіть це! Не повторюйте себе,
+інакше вам доведеться оновлювати кілька місць кожного разу, коли ви хочете змінити щось одне.
 
-**Bad:**
+**Погано:**
 
 ```php
 function showDeveloperList(array $developers): void
@@ -2124,7 +2140,11 @@ function showDeveloperList(array $developers): void
         $expectedSalary = $developer->calculateExpectedSalary();
         $experience = $developer->getExperience();
         $githubLink = $developer->getGithubLink();
-        $data = [$expectedSalary, $experience, $githubLink];
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
 
         render($data);
     }
@@ -2136,14 +2156,18 @@ function showManagerList(array $managers): void
         $expectedSalary = $manager->calculateExpectedSalary();
         $experience = $manager->getExperience();
         $githubLink = $manager->getGithubLink();
-        $data = [$expectedSalary, $experience, $githubLink];
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
 
         render($data);
     }
 }
 ```
 
-**Good:**
+**Добре:**
 
 ```php
 function showList(array $employees): void
@@ -2152,32 +2176,44 @@ function showList(array $employees): void
         $expectedSalary = $employee->calculateExpectedSalary();
         $experience = $employee->getExperience();
         $githubLink = $employee->getGithubLink();
-        $data = [$expectedSalary, $experience, $githubLink];
+        $data = [
+            $expectedSalary,
+            $experience,
+            $githubLink
+        ];
 
         render($data);
     }
 }
 ```
 
-**Very good:**
+**Very Добре:**
 
-It is better to use a compact version of the code.
+Краще використовувати компактну версію коду.
 
 ```php
 function showList(array $employees): void
 {
     foreach ($employees as $employee) {
-        render([$employee->calculateExpectedSalary(), $employee->getExperience(), $employee->getGithubLink()]);
+        render([
+            $employee->calculateExpectedSalary(),
+            $employee->getExperience(),
+            $employee->getGithubLink()
+        ]);
     }
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ повернутись до змісту](#зміст)**
+
+
 
 ## Translations
 
-This is also available in other languages:
+Також доступно на інших мовах:
 
+* :uk: **Ukrainian:**
+   * [PetroOstapuk/clean-code-php](https://github.com/PetroOstapuk/clean-code-php)
 * :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
 * :ru: **Russian:**
