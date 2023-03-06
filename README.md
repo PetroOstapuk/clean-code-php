@@ -2212,7 +2212,7 @@ function showList(array $employees): void
 
 Також доступно на інших мовах:
 
-* :uk: **Ukrainian:**
+* :ua: **Ukrainian:**
    * [PetroOstapuk/clean-code-php](https://github.com/PetroOstapuk/clean-code-php)
 * :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
